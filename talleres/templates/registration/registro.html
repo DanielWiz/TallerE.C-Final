@@ -1,0 +1,15 @@
+{% extends 'taller/base.html' %}
+{% block content %}
+<div class="boxSingup" style="margin: 12px; text-align: center;">
+	<h2>Registro</h2>
+	<h4>Rellena los espacios con los datos solicitados para empezar a navegar en TallerE.C.!</h4>
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button class="btn btn-info" type="submit">Registro</button>
+		</form>
+	<div class="ficon">
+		<a href="/" class="btn btn-default" role="button">Volver</a>
+	<div/>
+</div>
+{% endblock %}

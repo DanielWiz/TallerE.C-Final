@@ -1,0 +1,60 @@
+{% extends 'taller/base.html' %}
+{% block content %}
+  <div class="w3-content w3-display-container">
+    <img class="mySlides" src="static/img/talleres1.jpg" style="width:100%;">
+    <img class="mySlides" src="static/img/logo-estacion-sin-30.jpg" style="width:100%">
+
+    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="box">
+        <div class="col-md-4">
+          <div class="wow bounceIn" data-wow-offset="0" data-wow-delay="0.4s">
+            <h4>Talleres Para Ti</h4>
+            <div class="icon">
+              <i class="fa fa-heart-o fa-3x"></i>
+            </div>
+            <p>Elegidos y creados por la comunidad para mejorar tu calidad de vida.</p>
+            <div class="ficon">
+              <a href="#" class="btn btn-default" role="button">Mas Informacion</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="wow bounceIn" data-wow-offset="0" data-wow-delay="1.0s">
+            <h4>Pagina Web responsiva</h4>
+            <div class="icon">
+              <i class="fa fa-desktop fa-3x"></i>
+            </div>
+            <p>Si no tienes posibilidad de verlo en pc, puedes verlo en tu celular.</p>
+            <div class="ficon">
+              <a href="#" class="btn btn-default" role="button">Ver mas</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="wow bounceIn" data-wow-offset="0" data-wow-delay="1.6s">
+            <h4>Siempre un taller cerca de ti</h4>
+            <div class="icon">
+              <i class="fa fa-location-arrow fa-3x"></i>
+            </div>
+            <p>Este proyecto tenien como objetivo acercarte mas a ti a toda la comunidad a los talleres de la comuna.</p>
+            <div class="ficon">
+              <a href="{% url 'mapa' %}" class="btn btn-default" role="button">Ver Mas</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+  
