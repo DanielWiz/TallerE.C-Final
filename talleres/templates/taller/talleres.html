@@ -3,13 +3,25 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Talleres<br><small>Vea los talleres qu hay ahora en la comuna e informese sobre ellos:</small></h2>
-
+			<h2>Talleres<br><small>Vea los talleres que hay ahora mismo en la comuna e informese sobre ellos:</small></h2>
+				<div class="row">
+					{% if talleres %}
+				    	<ul>
+					    	{% for t in talleres %}
+					      	<li>
+					       		<h3>{{ t.nombre }}</h3>
+					        	Descripción: {{ t.descripcion }}</br>
+					        	Fecha taller: {{t.fecha}}</br>
+					        	Dirección y/o lugar donde se realizará el taller: {{t.lugar_taller}}
+					        </li>
+					    	{% endfor %}
+					    </ul>
+					{% else %}
+					    <p>No hay talleres registrados.</p>
+					{% endif %}
+				</div>
 			<a href="/" class="btn btn-info" role="button">Volver</a>
 		</div>
 	</div>
 </div>
-
-
-
 {% endblock %}

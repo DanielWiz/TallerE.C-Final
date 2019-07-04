@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from .forms import UserCreationForm
-from .models import Propuestas
+from .models import Propuestas, Taller
 from django.template import loader
 
 def index(request):
@@ -60,6 +60,22 @@ def cargarPropuestas(request):
     #Invocamos la página de respuesta 'index.html'
     return HttpResponse(template.render(context, request))
 
+def talleres(request):  
+    #Obtenemos los departamentos ordenados de manera descendente.
+    #[Z-A] Se antepone el signo menos (-)
+    cargarTalleres = Taller.objects.all()
+
+    #Cargamos el archivo index.html que se encuentra en la carpeta 'templates'
+    template = loader.get_template('taller/talleres.html')
+
+    #Creamos el nombre 'deptos' para reutilizarlo en el archivo 'index.html'
+    context = {
+        'talleres': cargarTalleres,
+    }
+
+    #Invocamos la página de respuesta 'index.html'
+    return HttpResponse(template.render(context, request))  
+
 def detallePropuestas(request, propuesta_id):
 	propuestaD = Propuestas.objects.get(pk=propuesta_id)
 	return render(request, 'taller/propuestasDetalles.html', {'propuestaD': propuestaD})
@@ -68,11 +84,11 @@ def VotosUp(request,propuesta_id):
     user = request.user
     votos = Propuestas.objects.get(pk=propuesta_id)
     votos.votes.up(user.id)
-    return render(request, 'taller/index.html', {'votos': votos})
+    return redirect("/")
 
 def VotosDown(request,propuesta_id):
     user = request.user
     votos = Propuestas.objects.get(pk=propuesta_id)
     votos.votes.down(user.id)
-    return render(request, 'taller/index.html', {'votos': votos})
+    return redirect("/")
 
