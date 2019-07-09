@@ -14,4 +14,6 @@ urlpatterns = [
     path('propuesta/<int:propuesta_id>', views.detallePropuestas, name='propuestaD'),
     path('propuvoto/<int:propuesta_id>', views.VotosUp, name='votosUp'),
     path('propunovoto/<int:propuesta_id>', views.VotosDown, name='votosDown'),
+    path('agregarPropuesta', views.agregarNuevaPropuesta, name='agregarNuevaPropuesta'),
+    path('guardarPropuesta', views.guardarNuevaPropuesta, name='guardarNuevaPropuesta'),
 ]

@@ -1,6 +1,6 @@
 {% extends 'taller/base.html' %}
 {% block content %}
-<div id="containerDetallePaciente" class="container">
+<div id="containerDetallePropuesta" class="container">
 	<h2>Propuesta: {{propuestaD.PropuestaNombre}}</h2>
 	<dl>
 		<dt>Detalle: {{ propuestaD.PropuestaDetalle}}</dt>
@@ -17,8 +17,11 @@
 			<a id="linkVolver" href="/propunovoto/{{propuestaD.IdPropuestas}}" class="btn btn-warning" role="button">No</a>
 		</div>		
 	</div>	
+
+	<div class="row">
+		<div class="col text-center">
+			<a href="{% url 'cargarPropuestas' %}" class="btn btn-info" role="button">Volver</a>
+		</div>		
+	</div>
 </div>
-
-
-
 {% endblock %}

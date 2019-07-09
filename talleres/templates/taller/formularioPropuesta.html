@@ -1,0 +1,24 @@
+{% extends 'taller/base.html' %}
+{% block content %}
+<div class="container">
+	<h2>Formulario para crear nueva propuesta</h2>
+	<h4>Pon detalles sobre la actividad o taller que quieres en la comuna:</h4>
+	<form class="formmulario" action="/guardarPropuesta" method="post">
+		{% csrf_token %}
+		<div class="form-group">
+		  <label for="usr">Nombre propuesta:</label>
+		  <input type="text" name="txtNombrePropuesta" class="form-control">
+		</div>
+		<div class="form-group">
+		  <label for="usr">Descripción Propuesta:</label>
+		  <input type="text" name="txtDetallePropuesta" class="form-control">
+		</div>
+		<div class="row">
+			<div class="col text-center">
+				<button class="btn btn-info" type="submit">Enviar Propuesta</button>
+			</div>		
+		</div>							
+	</form>
+</div>
+
+{% endblock %}

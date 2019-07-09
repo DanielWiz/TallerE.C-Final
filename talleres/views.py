@@ -84,11 +84,21 @@ def VotosUp(request,propuesta_id):
     user = request.user
     votos = Propuestas.objects.get(pk=propuesta_id)
     votos.votes.up(user.id)
-    return redirect("/")
+    return redirect("/propuestas")
 
 def VotosDown(request,propuesta_id):
     user = request.user
     votos = Propuestas.objects.get(pk=propuesta_id)
     votos.votes.down(user.id)
-    return redirect("/")
+    return redirect("/propuestas")
+
+def agregarNuevaPropuesta(request):
+    return render(request, 'taller/formularioPropuesta.html')
+
+def guardarNuevaPropuesta(request):
+    PropuestaNombre = request.POST['txtNombrePropuesta']
+    PropuestaDetalle = request.POST['txtDetallePropuesta']
+    p = Propuestas(PropuestaNombre = PropuestaNombre, PropuestaDetalle = PropuestaDetalle)
+    p.save()
+    return render(request, 'taller/guardarNuevaPropuesta.html', {'PropuestaNombre':PropuestaNombre})
 
