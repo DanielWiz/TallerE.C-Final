@@ -1,0 +1,38 @@
+{% extends 'taller/base.html' %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<h2>Propuestas a la espera de aprobación</h2>
+			{% if propuestas %}					
+					<table class="table">
+						<thead>
+					      <tr>
+					        <th>Nombre Propuesta</th>
+					        <th>Descripción</th>
+					        <th>Aprobación</th>
+					      </tr>
+					    </thead>
+					    {% for d in propuestas %}
+					    <tbody>
+					      <tr>
+					        <td><a href="#"><strong>{{d.PropuestaNombre}}</strong></a></td>
+					        <td><strong>{{d.PropuestaDetalle}}</strong></td>	
+					        <td><a class="btn-lg btn-success" 
+					        				href="/confirmarPropuestaParaAprobar/{{d.IdPropuesta}}">Aprobar</a><a class="btn-lg btn-danger" href="/confirmarEliminarPropuestaParaAprobar/{{d.IdPropuesta}}">Rechazar</a></td>					        
+					      </tr>			      
+					    </tbody>
+					    {% endfor %}
+					</table>	
+			{% else %}
+				<p>No Hay propuestas a la espera de aprobación.</p>
+		    {% endif %}		    
+			<div class="row">
+				<div class="col text-center">
+					<a href="/" class="btn btn-info" role="button">Volver</a>
+				</div>		
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

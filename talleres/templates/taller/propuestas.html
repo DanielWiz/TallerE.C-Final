@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h2>Propuestas de la comunidad<br><small>Aquí esta las propuestas de la gente sobre que talleres quieren en la comuna. Usted puede votar sobre que taller quiere apoyar, para que así la municipalidad eliga los mas votados:</small></h2>
-			{% if propuestas %}					
+			{% if propuestasaprobadas %}					
 					<table class="table">
 						<thead>
 					      <tr>
@@ -13,11 +13,11 @@
 					        <th>Cantidad votos</th>
 					      </tr>
 					    </thead>
-					    {% for d in propuestas|dictsortreversed:"vote_score" %}
+					    {% for d in propuestasaprobadas|dictsortreversed:"vote_score" %}
 					    <tbody>
 					      <tr>
-					        <td><a href="/propuesta/{{ d.IdPropuestas }}"><strong>{{d.PropuestaNombre}}</strong></a></td>
-					        <td><strong>{{d.PropuestaDetalle}}</strong></td>	
+					        <td><a href="/propuesta/{{ d.IdPropuestaAprobada }}"><strong>{{d.PropuestaAprobadaNombre}}</strong></a></td>
+					        <td><strong>{{d.PropuestaAprobadaDetalle}}</strong></td>	
 					        <td><strong>{{d.vote_score}}</strong></td>		        
 					      </tr>			      
 					    </tbody>

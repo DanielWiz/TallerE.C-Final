@@ -1,20 +1,20 @@
 {% extends 'taller/base.html' %}
 {% block content %}
 <div id="containerDetallePropuesta" class="container">
-	<h2>Propuesta: {{propuestaD.PropuestaNombre}}</h2>
+	<h2>Propuesta: {{propuestaD.PropuestaAprobadaNombre}}</h2>
 	<dl>
-		<dt>Detalle: {{ propuestaD.PropuestaDetalle}}</dt>
+		<dt>Detalle: {{ propuestaD.PropuestaAprobadaDetalle}}</dt>
 	</dl>
 
 	<div class="row">
 		<div class="col text-center">
-			<a href="/propuvoto/{{propuestaD.IdPropuestas}}" class="btn btn-success" role="button" >Si</a>
+			<a href="/propuvoto/{{propuestaD.IdPropuestaAprobada}}" class="btn btn-success" role="button" >Si</a>
 		</div>		
 	</div>	
 
 	<div class="row">
 		<div class="col text-center">
-			<a id="linkVolver" href="/propunovoto/{{propuestaD.IdPropuestas}}" class="btn btn-warning" role="button">No</a>
+			<a id="linkVolver" href="/propunovoto/{{propuestaD.IdPropuestaAprobada}}" class="btn btn-warning" role="button">No</a>
 		</div>		
 	</div>	
 

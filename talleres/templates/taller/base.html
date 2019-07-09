@@ -30,13 +30,17 @@
       <ul class="nav navbar-nav">
         <li><a href="{% url 'inicio' %}">Inicio</a></li>
         <li><a href="{% url 'talleres' %}">Talleres</a></li>
+        {% if user.is_staff %}
+          <li><a href="{% url 'propuestasParaAprobar' %}">Propuestas en espera de aprobación</a></li>
+        {% endif %}
         <li><a href="{% url 'cargarPropuestas' %}">Propuestas</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
           <li><p style="color: white;">Bienvenido, {{ user.username }}!</p></li>
-          <li><p><a class="btn-xs btn-info" style="border-radius: 6px;" href="{% url 'logout' %}">Cerrar sesión</a></p></li>   
-        {% else %}
+          <li><p><a class="btn-xs btn-info" style="border-radius: 6px;" href="{% url 'logout' %}">Cerrar sesión</a></p></li>
+
+          {% else %}
           <li><a href="/registro"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
           <li><a href="/accounts/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>          
         {% endif %}        

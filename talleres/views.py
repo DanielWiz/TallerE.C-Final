@@ -3,8 +3,9 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from .forms import UserCreationForm
-from .models import Propuestas, Taller
+from .models import Propuesta, Taller, PropuestaAprobada
 from django.template import loader
+from django.contrib.auth.decorators import user_passes_test
 
 def index(request):
     return render(request, 'taller/index.html', {})
@@ -44,7 +45,7 @@ def signup(request):
 def cargarPropuestas(request):  
     #Obtenemos los departamentos ordenados de manera descendente.
     #[Z-A] Se antepone el signo menos (-)
-    cargarPropuestas = Propuestas.objects.all()
+    cargarPropuestasAprobadas = PropuestaAprobada.objects.all()
 
     # votos = Propuestas.objects.values_list('IdPropuestas', flat=True)
     # total = votos.votes.count()   
@@ -54,7 +55,7 @@ def cargarPropuestas(request):
 
     #Creamos el nombre 'deptos' para reutilizarlo en el archivo 'index.html'
     context = {
-        'propuestas': cargarPropuestas,
+        'propuestasaprobadas': cargarPropuestasAprobadas,
     }
 
     #Invocamos la página de respuesta 'index.html'
@@ -77,18 +78,18 @@ def talleres(request):
     return HttpResponse(template.render(context, request))  
 
 def detallePropuestas(request, propuesta_id):
-	propuestaD = Propuestas.objects.get(pk=propuesta_id)
+	propuestaD = PropuestaAprobada.objects.get(pk=propuesta_id)
 	return render(request, 'taller/propuestasDetalles.html', {'propuestaD': propuestaD})
 
 def VotosUp(request,propuesta_id):
     user = request.user
-    votos = Propuestas.objects.get(pk=propuesta_id)
+    votos = PropuestaAprobada.objects.get(pk=propuesta_id)
     votos.votes.up(user.id)
     return redirect("/propuestas")
 
 def VotosDown(request,propuesta_id):
     user = request.user
-    votos = Propuestas.objects.get(pk=propuesta_id)
+    votos = PropuestaAprobada.objects.get(pk=propuesta_id)
     votos.votes.down(user.id)
     return redirect("/propuestas")
 
@@ -98,7 +99,48 @@ def agregarNuevaPropuesta(request):
 def guardarNuevaPropuesta(request):
     PropuestaNombre = request.POST['txtNombrePropuesta']
     PropuestaDetalle = request.POST['txtDetallePropuesta']
-    p = Propuestas(PropuestaNombre = PropuestaNombre, PropuestaDetalle = PropuestaDetalle)
+    p = Propuesta(PropuestaNombre = PropuestaNombre, PropuestaDetalle = PropuestaDetalle)
     p.save()
     return render(request, 'taller/guardarNuevaPropuesta.html', {'PropuestaNombre':PropuestaNombre})
 
+@user_passes_test(lambda u: u.is_superuser)
+def propuestasParaAprobar(request):
+    #Obtenemos los departamentos ordenados de manera descendente.
+    #[Z-A] Se antepone el signo menos (-)
+    cargarPropuestas = Propuesta.objects.all()
+
+    # votos = Propuestas.objects.values_list('IdPropuestas', flat=True)
+    # total = votos.votes.count()   
+
+    #Cargamos el archivo index.html que se encuentra en la carpeta 'templates'
+    template = loader.get_template('taller/listadoPropuestasParaAprobar.html')
+
+    #Creamos el nombre 'deptos' para reutilizarlo en el archivo 'index.html'
+    context = {
+        'propuestas': cargarPropuestas,
+    }
+
+    #Invocamos la página de respuesta 'index.html'
+    return HttpResponse(template.render(context, request))
+
+def confirmarPropuestaParaAprobar(request, propuesta_id):
+    propuestaD = Propuesta.objects.get(pk=propuesta_id)
+    return render(request, 'taller/confirmarPropuestaParaAprobar.html', {'propuestaD': propuestaD})
+
+def confirmarEliminarPropuestaParaAprobar(request, propuesta_id):
+    propuestaD = Propuesta.objects.get(pk=propuesta_id)
+    return render(request, 'taller/confirmarEliminarPropuestaParaAprobar.html', {'propuestaD': propuestaD})
+
+def guardarPropuestaAprobada(request, propuesta_id):
+    propuestaBorrar = Propuesta.objects.get(pk=propuesta_id)
+    PropuestaAprobadaNombre=request.POST['txtNombrePropuestaAprobada']
+    PropuestaAprobadaDetalle= request.POST['txtDetallePropuestaAprobada']
+    pa = PropuestaAprobada(PropuestaAprobadaNombre = PropuestaAprobadaNombre, PropuestaAprobadaDetalle = PropuestaAprobadaDetalle)
+    pa.save()
+    propuestaBorrar.delete()
+    return render(request, 'taller/guardarPropuestaAprobada.html', {'PropuestaAprobadaNombre': PropuestaAprobadaNombre})
+
+def eliminarPropuestaParaAprobar(request, propuesta_id):
+    propuestaBorrar = Propuesta.objects.get(pk=propuesta_id)
+    propuestaBorrar.delete()
+    return render(request, 'taller/eliminarPropuestaParaAprobar.html')

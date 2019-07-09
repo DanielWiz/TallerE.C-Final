@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Propuestas,Taller
+from .models import Propuesta,Taller,PropuestaAprobada
 
 admin.site.register(Taller)
-admin.site.register(Propuestas)
+admin.site.register(Propuesta)
+admin.site.register(PropuestaAprobada)
